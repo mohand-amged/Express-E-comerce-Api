@@ -1,0 +1,133 @@
+// POSTMAN
+
+API: E-Commerce Service
+=======================
+
+Authentication
+--------------
+- All admin routes require a valid JWT token in the `Authorization` header.
+- Example: `Authorization: Bearer <token>`
+
+───────────────────────────────────────────────────────────────────────────────
+
+Endpoint: GET /api/products
+---------------------------------
+- Description: Get all products (public access).
+- Authentication: None.
+- Parameters: None.
+- Response:
+  - 200: Success (returns product list).
+  - 500: Server error.
+
+───────────────────────────────────────────────────────────────────────────────
+
+Endpoint: GET /api/products/:id
+---------------------------------
+- Description: Get single product by ID (public access).
+- Authentication: None.
+- Parameters:
+  - id (URL path): Product ID
+- Response:
+  - 200: Success (returns product details).
+  - 404: Product not found.
+  - 500: Server error.
+
+───────────────────────────────────────────────────────────────────────────────
+
+Endpoint: POST /api/products
+---------------------------------
+- Description: Create new product (admin only).
+- Authentication: Required (admin role).
+- Body (JSON):
+  {
+    "title": "Product Name",
+    "quantity": 100,
+    "description": "Product details",
+    "price": 29.99
+  }
+- Response:
+  - 201: Product created.
+  - 400: Invalid input.
+  - 401/403: Unauthorized.
+  - 500: Server error.
+
+───────────────────────────────────────────────────────────────────────────────
+
+Endpoint: PUT /api/products/:id
+---------------------------------
+- Description: Update product by ID (admin only).
+- Authentication: Required (admin role).
+- Parameters:
+  - id (URL path): Product ID
+- Body (JSON):
+  {
+    "title": "Updated Name",
+    "quantity": 50,
+    "description": "New details",
+    "price": 39.99
+  }
+- Response:
+  - 200: Product updated.
+  - 404: Product not found.
+  - 401/403: Unauthorized.
+  - 500: Server error.
+
+───────────────────────────────────────────────────────────────────────────────
+
+Endpoint: DELETE /api/products/:id
+---------------------------------
+- Description: Delete product by ID (admin only).
+- Authentication: Required (admin role).
+- Parameters:
+  - id (URL path): Product ID
+- Response:
+  - 200: Product deleted.
+  - 404: Product not found.
+  - 401/403: Unauthorized.
+  - 500: Server error.
+
+───────────────────────────────────────────────────────────────────────────────
+
+Endpoint: GET /api/auth/users
+---------------------------------
+- Description: Get all users (admin only).
+- Authentication: Required (admin role).
+- Response:
+  - 200: Success (returns user list).
+  - 401/403: Unauthorized.
+  - 500: Server error.
+
+───────────────────────────────────────────────────────────────────────────────
+
+Endpoint: POST /api/auth/register
+---------------------------------
+- Description: Register new user (public).
+- Body (JSON):
+  {
+    "firstname": "John",
+    "lastname": "Doe",
+    "username": "johndoe",
+    "phoneNumber": "+123456789",
+    "email": "user@example.com",
+    "address": "123 Main St",
+    "password": "securePassword123"
+  }
+- Response:
+  - 201: User created (returns JWT token).
+  - 409: User already exists.
+  - 500: Server error.
+
+───────────────────────────────────────────────────────────────────────────────
+
+Endpoint: POST /api/auth/login
+---------------------------------
+- Description: Authenticate user (public).
+- Body (JSON):
+  {
+    "email": "user@example.com",
+    "password": "securePassword123"
+  }
+- Response:
+  - 200: Login successful (returns JWT token).
+  - 400: Invalid credentials.
+  - 500: Server error.
